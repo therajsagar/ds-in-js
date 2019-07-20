@@ -98,3 +98,23 @@ LinkedList.prototype.removeFromPosition = function(position) {
   }
   current.next = current.next.next;
 };
+
+LinkedList.prototype.remove = function(value) {
+  if (!this.head) {
+    console.log('Underflow');
+    return;
+  }
+  let current = this.head;
+  if (current.value === value) {
+    this.head = current.next;
+    return;
+  }
+  while (current.next) {
+    if (current.next.value === value) {
+      current.next = current.next.next;
+      return;
+    }
+    current = current.next;
+  }
+  console.log('Element not found');
+};
