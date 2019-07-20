@@ -39,7 +39,38 @@ BinarySearchTree.prototype.insert = function(data) {
   }
 };
 
-// BinarySearchTree.prototype.remove = function(data) {};
+BinarySearchTree.prototype.remove = function(root = this.root, data) {
+  if (!this.root) {
+    console.log('Empty Tree');
+    return;
+  }
+  if (data < root.value) {
+    root.left = this.remove(root.left, data);
+    return root;
+  } else if (data > root.value) {
+    root.right = this.remove(root.right, data);
+    return root;
+  } else {
+    if (!root.left && !root.right) {
+      root = null;
+      return root;
+    }
+    if (!root.left) {
+      return root.right;
+    }
+    if (!root.right) {
+      return root.left;
+    }
+
+    let current = root.right;
+    while (current.left) {
+      current = current.left;
+    }
+    root.data = current.data;
+    root.right = this.remove(root.right, current.data);
+    return root;
+  }
+};
 
 BinarySearchTree.prototype.getMinNode = function() {
   let root = this.root;
@@ -98,7 +129,7 @@ BinarySearchTree.prototype.contains = function(data) {
 };
 
 BinarySearchTree.prototype.inorder = function(root = this.root) {
-  if (!root) {
+  if (!this.root) {
     return 'Empty Tree';
   }
   root.left && this.inorder(root.left);
