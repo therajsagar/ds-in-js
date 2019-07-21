@@ -23,11 +23,11 @@ Queue.prototype.traverse = function() {
 
 Queue.prototype.enqueue = function(value) {
   value = new Node(value);
-  if (!this.head) {
+  let current = this.head;
+  if (!current) {
     this.head = value;
     return;
   }
-  let current = this.head;
   while (current.next) {
     current = current.next;
   }

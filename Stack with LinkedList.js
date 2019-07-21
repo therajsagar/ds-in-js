@@ -23,11 +23,11 @@ Stack.prototype.traverse = function() {
 
 Stack.prototype.push = function(value) {
   value = new Node(value);
-  if (!this.head) {
+  let current = this.head;
+  if (!current) {
     this.head = value;
     return;
   }
-  let current = this.head;
   while (current.next) {
     current = current.next;
   }
@@ -35,11 +35,11 @@ Stack.prototype.push = function(value) {
 };
 
 Stack.prototype.pop = function() {
-  if (!this.head) {
+  let current = this.head;
+  if (!current) {
     console.log('Underflow');
     return;
   }
-  let current = this.head;
   while (current.next) {
     if (!current.next.next) {
       current.next = null;
