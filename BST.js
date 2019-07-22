@@ -27,58 +27,54 @@ BinarySearchTree.prototype.insert = function(data) {
         current.left = node;
         return;
       } else {
-        search(current.left);
+        return search(current.left);
       }
     } else if (data > current.value) {
       if (!current.right) {
         current.right = node;
         return;
       } else {
-        search(current.right);
+        return search(current.right);
       }
+    } else {
+      return null;
     }
   };
-  search(root);
+  return search(root);
 };
 
-// BinarySearchTree.prototype.remove = function(data, root = this.root) {
-//   if (!this.root) {
-//     console.log('Empty Tree');
-//     return;
-//   }
-//   let current = root;
-//   while (current) {
-//     if (data === current.value) {
-//       if (!current.left && !current.right) {
-//         current = null;
-//         return;
-//       } else if (!current.left) {
-//         current = current.right;
-//       } else if (!current.right) {
-//         current = current.left;
-//       } else {
-//         let piv = current.right;
-//         while (piv.left) {
-//           piv = piv.left;
-//         }
-//         current = piv;
-//         piv = null;
-//       }
-//     } else if (data < current.value) {
-//       if (!current.left) {
-//         return 'Element Not Found.';
-//       } else {
-//         current = current.left;
-//       }
-//     } else {
-//       if (!current.right) {
-//         return 'Element Not Found.';
-//       } else {
-//         current = current.right;
-//       }
-//     }
-//   }
-// };
+BinarySearchTree.prototype.remove = function(data) {
+  const deleteNode = (current, data) => {
+    if (!current) {
+      return null;
+    }
+    if (data === current.value) {
+      if (!current.left && !current.right) {
+        return null;
+      }
+      if (!current.left) {
+        return current.right;
+      }
+      if (!current.right) {
+        return current.left;
+      }
+      let tempNode = current.right;
+      while (tempNode.left) {
+        tempNode = tempNode.left;
+      }
+      current.value = tempNode.value;
+      current.right = deleteNode(current.right, tempNode.value);
+      return current;
+    } else if (data < current.value) {
+      current.left = deleteNode(current.left, data);
+      return current;
+    } else {
+      current.right = deleteNode(current.right, data);
+      return current;
+    }
+  };
+  this.root = deleteNode(this.root, data);
+};
 
 BinarySearchTree.prototype.getMinNode = function() {
   let root = this.root;
