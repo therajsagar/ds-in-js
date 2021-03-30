@@ -190,3 +190,19 @@ BinarySearchTree.prototype.BFS = function() {
   }
   return result;
 };
+
+BinarySearchTree.prototype.search = function(data) {
+  let isFound = false;
+  let curr = this.root;
+
+  if(!curr) return false;
+
+  while(curr && !isFound){
+    if(data < curr.value) current = current.left;
+    else if(data > curr.value) current = current.right;
+    else isFound = true
+  }
+  
+  if (!isFound) return 'Not Found';
+  return curr;
+};
